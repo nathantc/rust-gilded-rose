@@ -58,6 +58,9 @@ fn main() {
         let item_iter = gilded_rose.items.iter();
 
         println!("Day {}", days);
+        print!("{}\r", "Name");
+        println!("\t\t\t\t\t\t{}\t{}", "Sell In", "Quality");
+
         for item in item_iter {
             print!("{}\r", item.name);
             println!("\t\t\t\t\t\t{}\t{}", item.sell_in, item.quality);
@@ -93,18 +96,20 @@ impl GildedRose {
             {
                 if self.items[i].quality > 0 {
                     if !self.items[i].name.eq("Sulfuras, Hand of Ragnaros") {
-                        self.items[i].quality -= 1;
+                        self.items[i].quality = self.items[i].quality - 1;
                     }
                 }
-            }
-            else {
+            } else {
                 if self.items[i].quality < 50 {
-                    self.items[i].quality += 1;
+                    self.items[i].quality = self.items[i].quality + 1;
 
-                    if self.items[i].name.eq("Backstage passes to a TAFKAL80ETC concert") {
+                    if self.items[i]
+                        .name
+                        .eq("Backstage passes to a TAFKAL80ETC concert")
+                    {
                         if self.items[i].sell_in < 11 {
                             if self.items[i].quality < 50 {
-                                self.items[i].quality += 1;
+                                self.items[i].quality = self.items[i].quality + 1;
                             }
                         }
 
@@ -117,8 +122,29 @@ impl GildedRose {
                 }
             }
 
-            if self.items[i].name == "Aged Brie" {
-                self.items[i].sell_in -= 1;
+            if !self.items[i].name.eq("Sulfuras, Hand of Ragnaros") {
+                self.items[i].sell_in = self.items[i].sell_in - 1;
+            }
+
+            if self.items[i].sell_in < 0 {
+                if !self.items[i].name.eq("Aged Brie") {
+                    if !self.items[i]
+                        .name
+                        .eq("Backstage passes to a TAFKAL80ETC concert")
+                    {
+                        if self.items[i].quality > 0 {
+                            if !self.items[i].name.eq("Sulfuras, Hand of Ragnaros") {
+                                self.items[i].quality = self.items[i].quality - 1;
+                            }
+                        }
+                    } else {
+                        self.items[i].quality = self.items[i].quality - self.items[i].quality;
+                    }
+                } else {
+                    if self.items[i].quality < 50 {
+                        self.items[i].quality = self.items[i].quality + 1;
+                    }
+                }
             }
 
             i += 1;
