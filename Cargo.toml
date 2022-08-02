@@ -1,8 +1,18 @@
 [package]
-name = "gilded-rose"
+name = "gilded_rose"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+
+[dev-dependencies]
+async-trait = "0.1"
+cucumber = "0.13"
+futures = "0.3"
+tokio = "1.12"
+
+[[test]]
+name = "gilded_rose_cucumber"
+harness = false  # allows Cucumber to print output instead of libtest
