@@ -1,16 +1,15 @@
-@Feature
 Feature: Perishable Items
-
-    @Scenario
-    Scenario: Daily processing of item
-        Given item <name> has a Sell In of <sell_in> days and a Quality of <quality>
-        When processing for <n> days
-        Then it should perish in <new_sell_in> days
-        And it should have a quality of <new_quality>
-
-    @Perishable
-    Examples:
-        | name                      | n | sell_in | new_sell_in | quality | new_quality |
-        | +5 Dexterity Vest         | 5 | 10      | 5           | 20      | 15          | 
-        | Elixir of the Mongoose    | 5 | 16      | 11          | 17      | 12          | 
-
+    
+    Scenario: Perishable items degrade daily
+        Given an item with sell_in and quality
+        | Item                      | sell_in | quality |
+        | +5 Dexterity Vest         | 10      | 20      |
+        | Elixir of the Mongoose    | 16      | 17      |
+        When processing for multiple days
+        | Item                      | days |
+        | +5 Dexterity Vest         | 5    |
+        | Elixir of the Mongoose    | 3    |
+        Then item as a updated sell_in and quality
+        | Updated Sell In | Updated Quality |
+        | 5               | 15              | 
+        | 13              | 14              | 
