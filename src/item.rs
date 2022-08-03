@@ -1,15 +1,24 @@
-
+#[derive(Default, Debug)]
 pub struct Item {
     pub name: String,
     pub sell_in: i32,
     pub quality: u32,
 }
 
+#[derive(Default, Debug)]
 pub struct GildedRose {
     pub items: Vec<Item>,
 }
 
 impl GildedRose {
+    pub fn new() -> GildedRose {
+        GildedRose { items: Vec::new() }
+    }
+
+    pub fn add_item(&mut self, item: Item) {
+        self.items.push(item);
+    }
+
     pub fn update_quality(&mut self) {
         let mut i = 0;
 

@@ -11,7 +11,7 @@ edition = "2021"
 async-trait = "0.1"
 cucumber = "0.13"
 futures = "0.3"
-tokio = "1.12"
+tokio = { version = "1.12", features = ["macros", "rt-multi-thread", "time"] }
 
 [[test]]
 name = "gilded_rose_cucumber"
