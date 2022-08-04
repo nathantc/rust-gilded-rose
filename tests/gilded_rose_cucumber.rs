@@ -38,7 +38,6 @@ fn given_an_item(world: &mut ItemWorld, step: &Step) {
 
 #[when(expr = "processing for {int} days")]
 fn when_processing_for_multiple_days(world: &mut ItemWorld, days: u32) {
-    assert_eq!(5, days);
     for (_key, value) in world.items.iter_mut() {
         for _day in 1..=days {
             item::update_quality(value);
