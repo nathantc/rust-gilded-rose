@@ -45,7 +45,7 @@ fn when_processing_for_multiple_days(world: &mut ItemWorld, days: u32) {
     }
 }
 
-#[then(expr = "item has updated sell_in")]
+#[then(expr = "item has updated values")]
 fn then_item_has_updated_sell_in(world: &mut ItemWorld, step: &Step) {
     if let Some(table) = step.table.as_ref() {
         for row in table.rows.iter().skip(1) {
