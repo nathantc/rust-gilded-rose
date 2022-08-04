@@ -52,7 +52,9 @@ fn then_item_has_updated_sell_in(world: &mut ItemWorld, step: &Step) {
         for row in table.rows.iter().skip(1) {
             let item = world.items.get(&row[0]).unwrap();
             let expected_sell_in = row[1].parse::<i32>().unwrap();
+            let expected_quality = row[2].parse::<u32>().unwrap();
             assert_eq!(expected_sell_in, item.sell_in);
+            assert_eq!(expected_quality, item.quality);
         }
     } else {
         panic!("Expected data table to exist for Items");
