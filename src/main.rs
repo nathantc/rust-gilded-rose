@@ -1,50 +1,20 @@
-mod item;
-use crate::item::{update_quality, Item};
+use crate::gilded_rose::{GildedRose, Item};
+
+mod gilded_rose;
 
 fn main() {
-    let mut items: Vec<Item> = vec![
-        Item {
-            name: "+5 Dexterity Vest".to_string(),
-            sell_in: 10,
-            quality: 20,
-        },
-        Item {
-            name: "Aged Brea".to_string(),
-            sell_in: 2,
-            quality: 0,
-        },
-        Item {
-            name: "Elixir of the Mongoose".to_string(),
-            sell_in: 5,
-            quality: 7,
-        },
-        Item {
-            name: "Sulfuras, Hand of Ragnaros".to_string(),
-            sell_in: 0,
-            quality: 80,
-        },
-        Item {
-            name: "Backstage passes to a TAFKAL80ETC concert".to_string(),
-            sell_in: 15,
-            quality: 20,
-        },
-        Item {
-            name: "Backstage passes to a TAFKAL80ETC concert".to_string(),
-            sell_in: 10,
-            quality: 49,
-        },
-        Item {
-            name: "Backstage passes to a TAFKAL80ETC concert".to_string(),
-            sell_in: 5,
-            quality: 49,
-        },
-        Item {
-            name: "Conjured Mana Cake".to_string(),
-            sell_in: 3,
-            quality: 6,
-        },
+    let items = &[
+        Item::new("+5 Dexterity Vest",10, 20),
+        Item::new("Aged Brea", 2, 0,),
+        Item::new("Elixir of the Mongoose", 5, 7,),
+        Item::new("Sulfuras, Hand of Ragnaros", 0, 80,),
+        Item::new("Backstage passes to a TAFKAL80ETC concert", 15, 20,),
+        Item::new("Backstage passes to a TAFKAL80ETC concert", 10, 49,),
+        Item::new("Backstage passes to a TAFKAL80ETC concert", 5, 49,),
+        Item::new("Conjured Mana Cake", 3, 6,),
     ];
 
+    let mut gilded_rose = GildedRose::new(items);
 
     println!(":::: Gilded Rose Inventory ::::");
     println!();
@@ -56,15 +26,17 @@ fn main() {
 
         days += 1;
 
+        gilded_rose.update_quality();
+
+        let item_iter = gilded_rose.items.iter();
+
         println!("Day {}", days);
-        print!("Name\r");
-        println!("\t\t\t\t\t\tSell In\tQuality");
+        print!("{}\r", "Name");
+        println!("\t\t\t\t\t\t{}\t{}", "Sell In", "Quality");
 
-        for item in items.iter_mut() {
-            update_quality(item);
-
+        for item in item_iter {
             print!("{}\r", item.name);
-            println!("\t\t\t\t\t\t{}\t{}", item.sell_in, &item.quality);
+            println!("\t\t\t\t\t\t{}\t{}", item.sell_in, item.quality);
         }
 
         println!();
