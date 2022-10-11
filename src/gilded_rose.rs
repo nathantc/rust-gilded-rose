@@ -1,4 +1,4 @@
-
+#[derive(Debug, Clone)]
 pub struct Item {
     pub name: String,
     pub sell_in: i32,
@@ -20,10 +20,15 @@ pub struct GildedRose {
 }
 
 impl GildedRose {
+    pub fn new(items: &[Item]) -> GildedRose {
+        GildedRose { items: Vec::from(items) }
+    }
+
     pub fn update_quality(&mut self) {
         let mut i = 0;
 
         loop {
+
             if i >= self.items.len() {
                 break;
             }
@@ -88,5 +93,18 @@ impl GildedRose {
 
             i += 1;
         }
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use super::{GildedRose, Item};
+
+    #[test]
+    pub fn generic_item() {
+        let items = &[Item::new("Generic Item", 10, 25)];
+        let mut guilded_rose = GildedRose::new(items);
+
+        guilded_rose.update_quality();
     }
 }

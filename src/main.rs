@@ -3,20 +3,21 @@ use crate::gilded_rose::{GildedRose, Item};
 mod gilded_rose;
 
 fn main() {
-    let mut items: Vec<Item> = Vec::new();
-    items.push(Item::new("+5 Dexterity Vest",10, 20));
-    items.push(Item::new("Aged Brea", 2, 0,));
-    items.push(Item::new("Elixir of the Mongoose", 5, 7,));
-    items.push(Item::new("Sulfuras, Hand of Ragnaros", 0, 80,));
-    items.push(Item::new("Backstage passes to a TAFKAL80ETC concert", 15, 20,));
-    items.push(Item::new("Backstage passes to a TAFKAL80ETC concert", 10, 49,));
-    items.push(Item::new("Backstage passes to a TAFKAL80ETC concert", 5, 49,));
-    items.push(Item::new("Conjured Mana Cake", 3, 6,));
+    let items = &[
+        Item::new("+5 Dexterity Vest",10, 20),
+        Item::new("Aged Brea", 2, 0,),
+        Item::new("Elixir of the Mongoose", 5, 7,),
+        Item::new("Sulfuras, Hand of Ragnaros", 0, 80,),
+        Item::new("Backstage passes to a TAFKAL80ETC concert", 15, 20,),
+        Item::new("Backstage passes to a TAFKAL80ETC concert", 10, 49,),
+        Item::new("Backstage passes to a TAFKAL80ETC concert", 5, 49,),
+        Item::new("Conjured Mana Cake", 3, 6,),
+    ];
 
-    let mut gilded_rose = GildedRose { items: items };
+    let mut gilded_rose = GildedRose::new(items);
 
     println!(":::: Gilded Rose Inventory ::::");
-    println!("");
+    println!();
     let mut days = 0;
     'daily_update: loop {
         if days >= 5 {
@@ -38,6 +39,6 @@ fn main() {
             println!("\t\t\t\t\t\t{}\t{}", item.sell_in, item.quality);
         }
 
-        println!("");
+        println!();
     }
 }
