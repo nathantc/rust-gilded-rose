@@ -1,11 +1,11 @@
 #[path = "../src/gilded_rose.rs"]
 mod gilded_rose;
 
-use std::{convert::Infallible};
+use std::convert::Infallible;
 
+use crate::gilded_rose::GildedRose;
 use async_trait::async_trait;
 use cucumber::{gherkin::Step, given, then, when, World, WorldInit};
-use crate::gilded_rose::GildedRose;
 
 #[derive(Debug, WorldInit)]
 struct ItemWorld {
@@ -53,8 +53,16 @@ fn then_item_has_updated_sell_in(world: &mut ItemWorld, step: &Step) {
             let item = &world.gilded_rose.items[i];
             let expected_sell_in = row[1].parse::<i32>().unwrap();
             let expected_quality = row[2].parse::<i32>().unwrap();
-            assert_eq!(expected_sell_in, item.sell_in, "Expected Sell-In for item {} is {}, but found {}.", item.name, expected_sell_in, item.sell_in);
-            assert_eq!(expected_quality, item.quality, "Expected Quality for item {} is {}, but found {}.", item.name, expected_quality, item.quality);
+            assert_eq!(
+                expected_sell_in, item.sell_in,
+                "Expected Sell-In for item {} is {}, but found {}.",
+                item.name, expected_sell_in, item.sell_in
+            );
+            assert_eq!(
+                expected_quality, item.quality,
+                "Expected Quality for item {} is {}, but found {}.",
+                item.name, expected_quality, item.quality
+            );
         }
     } else {
         panic!("Expected data table to exist for Items");

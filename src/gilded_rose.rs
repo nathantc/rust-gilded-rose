@@ -102,7 +102,6 @@ impl GildedRose {
 
             i += 1;
         }
-        println!("Updated item {}", self.items[0])
     }
 }
 
