@@ -3,7 +3,7 @@ use crate::gilded_rose::{GildedRose, Item};
 mod gilded_rose;
 
 fn main() {
-    let items = &[
+    let item_vec = vec!(
         Item::new("+5 Dexterity Vest",10, 20),
         Item::new("Aged Brea", 2, 0,),
         Item::new("Elixir of the Mongoose", 5, 7,),
@@ -12,9 +12,11 @@ fn main() {
         Item::new("Backstage passes to a TAFKAL80ETC concert", 10, 49,),
         Item::new("Backstage passes to a TAFKAL80ETC concert", 5, 49,),
         Item::new("Conjured Mana Cake", 3, 6,),
-    ];
+    );
 
-    let mut gilded_rose = GildedRose::new(items);
+    let mut gilded_rose = GildedRose{
+        items: item_vec
+    };
 
     println!(":::: Gilded Rose Inventory ::::");
     println!();

@@ -20,9 +20,6 @@ pub struct GildedRose {
 }
 
 impl GildedRose {
-    pub fn new(items: &[Item]) -> GildedRose {
-        GildedRose { items: Vec::from(items) }
-    }
 
     pub fn update_quality(&mut self) {
         let mut i = 0;
