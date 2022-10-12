@@ -1,13 +1,15 @@
-#[path = "../src/item.rs"]
-mod item;
-use std::{collections::HashMap, convert::Infallible};
+#[path = "../src/gilded_rose.rs"]
+mod gilded_rose;
+
+use std::{convert::Infallible};
 
 use async_trait::async_trait;
 use cucumber::{gherkin::Step, given, then, when, World, WorldInit};
+use crate::gilded_rose::GildedRose;
 
 #[derive(Debug, WorldInit)]
 struct ItemWorld {
-    items: HashMap<String, item::Item>,
+    gilded_rose: GildedRose,
 }
 
 #[async_trait(?Send)]
@@ -16,7 +18,7 @@ impl World for ItemWorld {
 
     async fn new() -> Result<Self, Infallible> {
         Ok(Self {
-            items: HashMap::new(),
+            gilded_rose: GildedRose::new(&[]),
         })
     }
 }
@@ -24,12 +26,12 @@ impl World for ItemWorld {
 fn given_an_item(world: &mut ItemWorld, step: &Step) {
     if let Some(table) = step.table.as_ref() {
         for row in table.rows.iter().skip(1) {
-            let item = item::Item {
-                name: row[0].clone(),
-                sell_in: row[1].parse::<i32>().unwrap(),
-                quality: row[2].parse::<u32>().unwrap(),
-            };
-            world.items.insert(row[0].clone(), item);
+            let item = gilded_rose::Item::new(
+                &*row[0],
+                row[1].parse::<i32>().unwrap(),
+                row[2].parse::<i32>().unwrap(),
+            );
+            world.gilded_rose.items.push(item);
         }
     } else {
         panic!("Expected data table to exist for Items");
@@ -37,23 +39,22 @@ fn given_an_item(world: &mut ItemWorld, step: &Step) {
 }
 
 #[when(expr = "processing for {int} days")]
-fn when_processing_for_multiple_days(world: &mut ItemWorld, days: u32) {
-    for (_key, value) in world.items.iter_mut() {
-        for _day in 1..=days {
-            item::update_quality(value);
-        }
+fn when_processing_for_multiple_days(world: &mut ItemWorld, days: i32) {
+    for _day in 1..=days {
+        println!("Updating quality!");
+        &world.gilded_rose.update_quality();
     }
 }
 
 #[then(expr = "item has updated values")]
 fn then_item_has_updated_sell_in(world: &mut ItemWorld, step: &Step) {
     if let Some(table) = step.table.as_ref() {
-        for row in table.rows.iter().skip(1) {
-            let item = world.items.get(&row[0]).unwrap();
+        for (i, row) in table.rows.iter().skip(1).enumerate() {
+            let item = &world.gilded_rose.items[i];
             let expected_sell_in = row[1].parse::<i32>().unwrap();
-            let expected_quality = row[2].parse::<u32>().unwrap();
-            assert_eq!(expected_sell_in, item.sell_in);
-            assert_eq!(expected_quality, item.quality);
+            let expected_quality = row[2].parse::<i32>().unwrap();
+            assert_eq!(expected_sell_in, item.sell_in, "Expected Sell-In for item {} is {}, but found {}.", item.name, expected_sell_in, item.sell_in);
+            assert_eq!(expected_quality, item.quality, "Expected Quality for item {} is {}, but found {}.", item.name, expected_quality, item.quality);
         }
     } else {
         panic!("Expected data table to exist for Items");

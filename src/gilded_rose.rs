@@ -1,3 +1,5 @@
+use std::fmt::{Display, Formatter};
+
 #[derive(Debug, Clone)]
 pub struct Item {
     pub name: String,
@@ -6,7 +8,7 @@ pub struct Item {
 }
 
 impl Item {
-    pub(crate) fn new(name: &str, sell_in: i32, quality: i32) -> Item {
+    pub fn new(name: &str, sell_in: i32, quality: i32) -> Item {
         Item {
             name: name.to_string(),
             sell_in,
@@ -15,6 +17,13 @@ impl Item {
     }
 }
 
+impl Display for Item {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "Item: (name: {}, sell_in: {}, quality: {})", self.name, self.sell_in, self.quality)
+    }
+}
+
+#[derive(Debug)]
 pub struct GildedRose {
     pub items: Vec<Item>,
 }
@@ -93,6 +102,7 @@ impl GildedRose {
 
             i += 1;
         }
+        println!("Updated item {}", self.items[0])
     }
 }
 

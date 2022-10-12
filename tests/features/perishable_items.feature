@@ -1,14 +1,14 @@
 Feature: Perishable Items
-    
+
     Scenario: At the end of each day our system lowers both values for every item
         Given an item
         | name                      | sell_in | quality |
         | +5 Dexterity Vest         | 10      | 20      |
         | Elixir of the Mongoose    | 16      | 17      |
-        
+
         When processing for 5 days
-         
-        Then item has updated values 
+
+        Then item has updated values
         | name                      | Updated sell_in | Updated quality |
         | +5 Dexterity Vest         | 5               | 15              |
         | Elixir of the Mongoose    | 11              | 12              |
@@ -18,10 +18,10 @@ Feature: Perishable Items
         | name                      | sell_in | quality |
         | +5 Dexterity Vest         | 0       | 20      |
         | Elixir of the Mongoose    | 0       | 17      |
-        
+
         When processing for 5 days
-         
-        Then item has updated values 
+
+        Then item has updated values
         | name                      | Updated sell_in | Updated quality |
         | +5 Dexterity Vest         | -5              | 10              |
         | Elixir of the Mongoose    | -5              | 7               |
@@ -31,10 +31,10 @@ Feature: Perishable Items
         | name                      | sell_in | quality |
         | +5 Dexterity Vest         | 5       | 5       |
         | Elixir of the Mongoose    | 5       | 10      |
-        
+
         When processing for 10 days
-         
-        Then item has updated values 
+
+        Then item has updated values
         | name                      | Updated sell_in | Updated quality |
         | +5 Dexterity Vest         | -5              | 0               |
         | Elixir of the Mongoose    | -5              | 0               |
@@ -43,10 +43,10 @@ Feature: Perishable Items
         Given an item
         | name                      | sell_in | quality |
         | Aged Brie                 | 15      | 5       |
-        
+
         When processing for 10 days
-         
-        Then item has updated values 
+
+        Then item has updated values
         | name                      | Updated sell_in | Updated quality |
         | Aged Brie                 | 5               | 15              |
 
@@ -54,10 +54,10 @@ Feature: Perishable Items
         Given an item
         | name                      | sell_in | quality |
         | Aged Brie                 | 5       | 5       |
-        
+
         When processing for 10 days
-         
-        Then item has updated values 
+
+        Then item has updated values
         | name                      | Updated sell_in | Updated quality |
         | Aged Brie                 | -5              | 20              |
 
@@ -65,10 +65,10 @@ Feature: Perishable Items
         Given an item
         | name                      | sell_in | quality |
         | Aged Brie                 | 5       | 40      |
-        
+
         When processing for 10 days
-         
-        Then item has updated values 
+
+        Then item has updated values
         | name                      | Updated sell_in | Updated quality |
         | Aged Brie                 | -5              | 50              |
 
@@ -76,9 +76,26 @@ Feature: Perishable Items
         Given an item
         | name                       | sell_in | quality |
         | Sulfuras, Hand of Ragnaros | 5       | 40      |
-        
+
         When processing for 10 days
-         
-        Then item has updated values 
+
+        Then item has updated values
         | name                       | Updated sell_in | Updated quality |
         | Sulfuras, Hand of Ragnaros |  5              | 40              |
+
+    Scenario: “Sulfuras”, being a legendary item, never has to be sold or decreases in `quality`
+        Given an item
+        | name                                      | sell_in | quality |
+        | Backstage passes to a TAFKAL80ETC concert | 15      | 20      |
+        | Backstage passes to a TAFKAL80ETC concert | 10      | 49      |
+        | Backstage passes to a TAFKAL80ETC concert | 5       | 49      |
+        | Backstage passes to a TAFKAL80ETC concert | 4       | 12      |
+
+        When processing for 5 days
+
+        Then item has updated values
+        | name                                      | Updated sell_in | Updated quality |
+        | Backstage passes to a TAFKAL80ETC concert |  10             | 25              |
+        | Backstage passes to a TAFKAL80ETC concert |  5              | 50              |
+        | Backstage passes to a TAFKAL80ETC concert |  0              | 50              |
+        | Backstage passes to a TAFKAL80ETC concert |  -1             | 0               |
