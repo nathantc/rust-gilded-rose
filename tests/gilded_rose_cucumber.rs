@@ -18,7 +18,7 @@ impl World for ItemWorld {
 
     async fn new() -> Result<Self, Infallible> {
         Ok(Self {
-            gilded_rose: GildedRose::new(&[]),
+            gilded_rose: GildedRose { items: Vec::new() }
         })
     }
 }

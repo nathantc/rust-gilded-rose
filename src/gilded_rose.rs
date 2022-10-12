@@ -102,15 +102,3 @@ impl GildedRose {
     }
 }
 
-#[cfg(test)]
-mod test {
-    use super::{GildedRose, Item};
-
-    #[test]
-    pub fn generic_item() {
-        let items = &[Item::new("Generic Item", 10, 25)];
-        let mut guilded_rose = GildedRose::new(items);
-
-        guilded_rose.update_quality();
-    }
-}
